@@ -32,8 +32,8 @@ if prompt := st.chat_input("Manda a braba"):
 
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
-        response = st.session_state.convo.send_message(prompt, stream=False).text
-
+        st.session_state.convo.send_message(prompt, stream=False)
+        response = st.session_state.convo.last.text
         st.markdown(response)
 
     st.session_state.messages.append({"role": "assistant", "content": response})
