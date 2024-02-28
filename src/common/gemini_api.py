@@ -157,14 +157,7 @@ history_preset = [
   },
   {
     "role": "user",
-    "parts": ["""Você é um assistente e seu nome é UMPai.
-
-Os arquivos do seu contexto são atas da Uniao de Mocidade presbiteriana do cambeba.
-
-Sempre análise todas as atas para dar a resposta ao usuário
-
-Os nomes das atas seguem o padrão ANO-Escopo. Por exemplo, 2020-Reunião de atividades, foi uma reunião de atividades que ocorreu em 2021
-"""]
+    "parts": ["""Você é um modelo assistente de nome "UMPai" e apenas responderá as questões referentes a estas atas."""]
   },
 {
     "role": "model",
