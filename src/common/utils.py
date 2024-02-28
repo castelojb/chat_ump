@@ -8,4 +8,4 @@ def get_env(env_name: str) -> str:
     if env_var := st.secrets[env_var]:
         return env_var
 
-    raise Exception(f"Missing database setting {env_name}")
+    raise Exception(f"Missing setting {env_name}")
