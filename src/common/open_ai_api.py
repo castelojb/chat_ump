@@ -1,6 +1,6 @@
 from typing import Optional
 
-from openai import AsyncOpenAI, OpenAI
+from openai import OpenAI
 from openai.types.beta import Assistant
 
 from src.common.utils import get_env

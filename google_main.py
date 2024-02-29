@@ -3,25 +3,19 @@ import streamlit as st
 
 load_dotenv()
 
-from src.thread.service import (
-    get_new_thread,
-    add_message_to_thread,
-    get_assistant_response,
-)
+
+from src.common.gemini_api import gemini_model, history_preset
 
 
 st.title("UMP AI - Seu assistente de mocidade")
-
-# Set a default model
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
 
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-if "thread" not in st.session_state:
-    st.session_state.thread = get_new_thread()
+if "convo" not in st.session_state:
+    st.session_state.convo = gemini_model.start_chat(history=history_preset)
+
 
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
@@ -29,10 +23,10 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # Accept user input
-if prompt := st.chat_input("Manda a Braba"):
+if prompt := st.chat_input("Manda a braba"):
+
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
-    add_message_to_thread(st.session_state.thread.id, prompt)
 
     # Display user message in chat message container
     with st.chat_message("user"):
@@ -42,8 +36,13 @@ if prompt := st.chat_input("Manda a Braba"):
     with st.chat_message("assistant"):
 
         with st.spinner("Pensando"):
-            response = get_assistant_response(st.session_state.thread.id)
+            st.session_state.convo.send_message(prompt, stream=False)
 
+            response = (
+                st.session_state.convo.last.text
+                if len(st.session_state.convo.last.parts) == 1
+                else "\n".join([msg.text for msg in st.session_state.convo.last.parts])
+            )
         st.markdown(response)
 
     st.session_state.messages.append({"role": "assistant", "content": response})
