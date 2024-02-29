@@ -6,7 +6,7 @@ from src.common.utils import get_env
 genai.configure(api_key=get_env("GOOGLE_API_KEY"))
 
 generation_config = {
-    "temperature": 0.4,
+    "temperature": 0.2,
     "top_p": 1,
     "top_k": 1,
     "max_output_tokens": 2048,
